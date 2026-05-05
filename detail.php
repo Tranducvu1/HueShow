@@ -35,16 +35,32 @@ function getRelatedEvents($current_id, $limit = 9) {
 
 $relatedEvents = getRelatedEvents($event_id);
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($event['title']) ?> - Event5</title>
+    <title><?= htmlspecialchars($event['title']) ?> - HueShow</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ==================== DARK THEME VARIABLES ==================== */
+        :root {
+            --primary-gold: #D4A147;
+            --primary-gold-light: #E5B563;
+            --primary-gold-dark: #B8862F;
+            --text-primary: #F5F5F0;
+            --text-secondary: #D0D0C8;
+            --text-muted: #A0A098;
+            --dark-bg: #1A1A1A;
+            --dark-bg-secondary: #242424;
+            --dark-bg-tertiary: #2E2E2E;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-gold: 0 8px 20px rgba(212, 161, 71, 0.25);
+            --shadow-lg: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -52,26 +68,28 @@ $relatedEvents = getRelatedEvents($event_id);
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background: #f6f6f6;
-            color: #262626;
+font-family: 'Times New Roman', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #242424 50%, #1F1F1F 100%);
+            color: var(--text-primary);
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1170px;
+            max-width: 1320px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
         /* ========== HEADER ========== */
         .main-header {
-            background: #0a0a0a;
-            color: white;
-            padding: 20px 0;
+            background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(36,36,36,0.95) 100%);
+            padding: 12px 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--primary-gold);
+            backdrop-filter: blur(10px);
         }
 
         .header-inner {
@@ -95,29 +113,35 @@ $relatedEvents = getRelatedEvents($event_id);
         }
 
         .nav-links a {
-            color: #99cc00;
+            color: var(--primary-gold);
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
+            transition: var(--transition);
             font-size: 1rem;
             text-transform: uppercase;
         }
 
         .nav-links a:hover {
-            color: #ffffff;
+            color: var(--primary-gold-light);
         }
 
         .btn-phone {
-            background: #99cc05;
-            color: #0a0a0a;
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+            color: #1a1a1a;
             padding: 10px 24px;
-            border-radius: 7px;
+            border-radius: 30px;
             font-weight: 700;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.3s;
+            transition: var(--transition);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-phone:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212,161,71,0.5);
         }
 
         /* ========== MAIN CONTENT ========== */
@@ -129,34 +153,63 @@ $relatedEvents = getRelatedEvents($event_id);
 
         .blog-single {
             flex: 1;
-            background: white;
-            padding: 30px 15px;
+            background: linear-gradient(135deg, #1A1A1A, #242424);
+            padding: 40px;
+            border-radius: 28px;
+            border: 1px solid rgba(212,161,71,0.2);
+            box-shadow: var(--shadow-md);
         }
 
         .post-sidebar {
-            width: 300px;
+            width: 320px;
         }
 
         .widget-area {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .widget {
-            background: white;
-            padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 3px rgba(0,0,0,.18);
+            background: linear-gradient(135deg, #1A1A1A, #242424);
+            padding: 24px;
+            border-radius: 24px;
+            border: 1px solid rgba(212,161,71,0.2);
+            box-shadow: var(--shadow-md);
         }
 
         .widget-title {
-            color: #99cc05;
-            margin-bottom: 15px;
+            color: var(--primary-gold);
+            margin-bottom: 16px;
             font-size: 1.2rem;
-            font-weight: 600;
-            border-bottom: 2px solid #99cc05;
+            font-weight: 700;
+            border-left: 5px solid var(--primary-gold);
+            padding-left: 14px;
+        }
+
+        .widget p, .widget ul li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .widget ul {
+            list-style: none;
+        }
+
+        .widget ul li {
+            margin-bottom: 10px;
             padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212,161,71,0.2);
+        }
+
+        .widget ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .widget ul li a:hover {
+            color: var(--primary-gold);
         }
 
         /* ========== ARTICLE ========== */
@@ -170,10 +223,10 @@ $relatedEvents = getRelatedEvents($event_id);
 
         .entry-category {
             display: inline-block;
-            background: #99cc05;
-            color: #0a0a0a;
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+            color: #1a1a1a;
             padding: 6px 12px;
-            border-radius: 4px;
+            border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -181,28 +234,28 @@ $relatedEvents = getRelatedEvents($event_id);
         }
 
         .entry-category a {
-            color: #0a0a0a;
+            color: #1a1a1a;
             text-decoration: none;
         }
 
         .entry-title {
             font-size: 2rem;
             font-weight: 700;
-            color: #0a0a0a;
+            color: var(--text-primary);
             margin-bottom: 12px;
             line-height: 1.3;
         }
 
         .is-divider {
             height: 2px;
-            background: #e2e8f0;
-            margin: 12px 0 12px 0;
+            background: rgba(212,161,71,0.3);
+            margin: 12px 0;
         }
 
         .entry-meta {
             display: flex;
             gap: 20px;
-            color: #64748b;
+            color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -210,6 +263,7 @@ $relatedEvents = getRelatedEvents($event_id);
 
         .entry-meta i {
             margin-right: 5px;
+            color: var(--primary-gold);
         }
 
         .entry-image {
@@ -219,18 +273,18 @@ $relatedEvents = getRelatedEvents($event_id);
         .entry-image img {
             width: 100%;
             height: auto;
-            border-radius: 4px;
-            box-shadow: 0 2px 3px rgba(0,0,0,.18);
+            border-radius: 20px;
+            border: 1px solid rgba(212,161,71,0.3);
         }
 
         .entry-content {
             line-height: 1.8;
-            color: #475569;
+            color: var(--text-secondary);
         }
 
         .entry-content h2 {
             font-size: 1.6rem;
-            color: #0a0a0a;
+            color: var(--primary-gold);
             margin: 24px 0 16px 0;
         }
 
@@ -243,11 +297,11 @@ $relatedEvents = getRelatedEvents($event_id);
             max-width: 100%;
             height: auto;
             margin: 20px 0;
-            border-radius: 4px;
+            border-radius: 16px;
         }
 
         .entry-content a {
-            color: #4c9616;
+            color: var(--primary-gold);
             text-decoration: none;
         }
 
@@ -259,15 +313,29 @@ $relatedEvents = getRelatedEvents($event_id);
         .html-before-comments {
             margin-top: 60px;
             padding-top: 40px;
-            border-top: 2px solid #e2e8f0;
+            border-top: 1px solid rgba(212,161,71,0.2);
         }
 
         .section-title {
             text-align: center;
             font-size: 2rem;
             font-weight: 700;
-            color: #0a0a0a;
+            color: var(--primary-gold);
             margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-gold), var(--primary-gold-light));
+            border-radius: 2px;
         }
 
         .row {
@@ -276,21 +344,18 @@ $relatedEvents = getRelatedEvents($event_id);
             gap: 30px;
         }
 
-        .row.large-columns-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
         .post-item {
-            background: white;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #1A1A1A, #242424);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 2px 3px rgba(0,0,0,.18);
-            transition: all 0.35s;
+            transition: var(--transition);
+            border: 1px solid rgba(212,161,71,0.2);
         }
 
         .post-item:hover {
-            box-shadow: 0 10px 25px rgba(0,0,0,.15);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(212,161,71,0.5);
         }
 
         .post-item a {
@@ -302,7 +367,6 @@ $relatedEvents = getRelatedEvents($event_id);
             width: 100%;
             aspect-ratio: 4 / 3;
             overflow: hidden;
-            background: #e2e8f0;
         }
 
         .image-cover img {
@@ -317,97 +381,146 @@ $relatedEvents = getRelatedEvents($event_id);
         }
 
         .box-text {
-            padding: 15px;
-            background: white;
+            padding: 20px;
         }
 
         .post-title {
             font-size: 1.1rem;
             font-weight: 700;
-            color: #0a0a0a;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
-        .post-date {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-
-        /* ========== FOOTER ========== */
-        .footer-wrapper {
-            background: #0a0a0a;
-            color: #cbd5e1;
-            padding: 48px 0 24px;
-            margin-top: 60px;
-        }
-
-        .footer-section {
-            background: url(/wp-content/uploads/2018/05/bg.jpg);
-            padding: 40px 0;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h4 {
-            color: #99cc05;
-            margin-bottom: 16px;
-            font-size: 1.2rem;
-        }
-
-        .footer-col p {
-            color: #94a3b8;
-            line-height: 1.8;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .social-icons a {
-            width: 40px;
-            height: 40px;
-            background: #1e293b;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #99cc05;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        .social-icons a:hover {
-            background: #99cc05;
-            color: #0a0a0a;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 24px;
-            border-top: 1px solid #1e293b;
-            font-size: 0.85rem;
-        }
-
+        /* ========== BACK LINK ========== */
         .back-link {
             margin-bottom: 20px;
         }
 
         .back-link a {
-            color: #4c9616;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+            color: #1a1a1a;
+            padding: 8px 20px;
+            border-radius: 40px;
             text-decoration: none;
             font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow-gold);
         }
 
         .back-link a:hover {
-            color: #99cc05;
+            transform: translateX(-3px);
+            box-shadow: 0 8px 18px rgba(212,161,71,0.4);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer-wrapper {
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text-secondary);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+            border-top: 2px solid var(--primary-gold);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--primary-gold);
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-gold), transparent);
+        }
+
+        .footer-col p {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-col i {
+            width: 28px;
+            color: var(--primary-gold);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(212,161,71,0.15);
+            border: 1px solid rgba(212,161,71,0.3);
+            border-radius: 50%;
+            color: var(--primary-gold);
+            font-size: 1.3rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-gold);
+            color: #1a1a1a;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(212,161,71,0.2);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== HOTLINE FIXED ========== */
+        .hotline-fixed {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+            color: #1a1a1a;
+            padding: 12px 24px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            z-index: 100;
+            box-shadow: var(--shadow-gold);
+            transition: var(--transition);
+        }
+
+        .hotline-fixed:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(212,161,71,0.5);
+            color: #1a1a1a;
         }
 
         /* ========== RESPONSIVE ========== */
@@ -431,6 +544,7 @@ $relatedEvents = getRelatedEvents($event_id);
             .nav-links {
                 justify-content: center;
                 flex-wrap: wrap;
+                gap: 16px;
             }
             .row {
                 grid-template-columns: 1fr;
@@ -438,10 +552,40 @@ $relatedEvents = getRelatedEvents($event_id);
             .entry-title {
                 font-size: 1.5rem;
             }
+            .blog-single {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.6rem;
+            }
         }
     </style>
 </head>
 <body>
+
+<!-- HEADER (giữ nguyên nội dung nhưng style đã được đồng bộ) -->
+<header class="main-header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.php">
+                    <img src="uploads/logo/logo.png" alt="HueShow" onerror="this.src='https://via.placeholder.com/200x70?text=HueShow'">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.php">Trang chủ</a></li>
+                <li><a href="events.php">Sự kiện</a></li>
+                <li><a href="teambuilding.php">Dịch vụ</a></li>
+                <li><a href="about.php">Giới thiệu</a></li>
+                <li><a href="contact.php">Liên hệ</a></li>
+            </ul>
+            <a href="tel:0989898989" class="btn-phone"><i class="fas fa-phone-alt"></i> 0989.898.989</a>
+        </div>
+    </div>
+</header>
 
 <main>
     <div class="container">
@@ -453,36 +597,31 @@ $relatedEvents = getRelatedEvents($event_id);
             <!-- LEFT SIDEBAR -->
             <div class="post-sidebar">
                 <div id="secondary" class="widget-area">
-                    <!-- About Widget -->
-                    <div class="widget widget_nav_menu">
+                    <div class="widget">
                         <span class="widget-title">VỀ CHÚNG TÔI</span>
-                        <p style="font-size: 0.9rem; color: #64748b;">Event5 chuyên tổ chức team building, sự kiện doanh nghiệp chuyên nghiệp sáng tạo.</p>
+                        <p>HueShow chuyên tổ chức team building, sự kiện doanh nghiệp chuyên nghiệp sáng tạo với phong cách chuyên nghiệp và giàu cảm xúc.</p>
                     </div>
 
-                    <!-- Recent Posts Widget -->
-                    <div class="widget widget_recent_entries">
+                    <div class="widget">
                         <span class="widget-title">BÀI VIẾT MỚI</span>
-                        <ul style="list-style: none; margin: 0;">
+                        <ul>
                             <?php 
                             $recent = $conn->query("SELECT id, title FROM events WHERE status = 'published' ORDER BY created_at DESC LIMIT 5");
                             if ($recent) {
                                 while ($row = $recent->fetch_assoc()) {
-                                    echo '<li style="margin-bottom: 8px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;">';
-                                    echo '<a href="detail.php?id=' . $row['id'] . '" style="color: #4c9616; text-decoration: none; font-size: 0.9rem;">' . htmlspecialchars($row['title']) . '</a>';
-                                    echo '</li>';
+                                    echo '<li><a href="detail.php?id=' . $row['id'] . '">' . htmlspecialchars($row['title']) . '</a></li>';
                                 }
                             }
                             ?>
                         </ul>
                     </div>
 
-                    <!-- Categories Widget -->
-                    <div class="widget widget_categories">
+                    <div class="widget">
                         <span class="widget-title">CHUYÊN MỤC</span>
-                        <ul style="list-style: none; margin: 0;">
-                            <li style="margin-bottom: 5px; color: #99cc05;"><a href="#" style="color: #4c9616; text-decoration: none;">Team Building</a></li>
-                            <li style="margin-bottom: 5px; color: #99cc05;"><a href="#" style="color: #4c9616; text-decoration: none;">Hội nghị khách hàng</a></li>
-                            <li style="margin-bottom: 5px; color: #99cc05;"><a href="#" style="color: #4c9616; text-decoration: none;">Sự kiện đặc biệt</a></li>
+                        <ul>
+                            <li><a href="#">Team Building</a></li>
+                            <li><a href="#">Hội nghị khách hàng</a></li>
+                            <li><a href="#">Sự kiện đặc biệt</a></li>
                         </ul>
                     </div>
                 </div>
@@ -507,19 +646,17 @@ $relatedEvents = getRelatedEvents($event_id);
                         </div>
                     </header>
 
-                    <!-- Featured Image -->
                     <?php if ($event['image']): ?>
                     <div class="entry-image">
                         <img src="<?= htmlspecialchars($event['image']) ?>" alt="<?= htmlspecialchars($event['title']) ?>">
                     </div>
                     <?php endif; ?>
 
-                    <!-- Article Content -->
                     <div class="entry-content">
                         <?= $event['description'] ?>
                         
                         <?php if ($event_details && isset($event_details['content'])): ?>
-                        <div style="margin-top: 24px; padding-top: 24px; border-top: 2px solid #e2e8f0;">
+                        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(212,161,71,0.2);">
                             <h2>Chi tiết sự kiện</h2>
                             <p><?= nl2br(htmlspecialchars($event_details['content'])) ?></p>
                         </div>
@@ -531,30 +668,24 @@ $relatedEvents = getRelatedEvents($event_id);
                 <div class="html-before-comments">
                     <h2 class="section-title">Các sự kiện khác</h2>
                     
-                    <div class="row large-columns-3 medium-columns-1 small-columns-1 row-small">
+                    <div class="row">
                         <?php foreach ($relatedEvents as $related): ?>
-                        <div class="col post-item">
-                            <div class="col-inner">
-                                <a href="detail.php?id=<?= $related['id'] ?>" class="plain">
-                                    <div class="box box-normal box-text-bottom box-blog-post has-hover">
-                                        <div class="box-image">
-                                            <div class="image-overlay-add image-cover">
-                                                <?php if ($related['image']): ?>
-                                                    <img src="<?= htmlspecialchars($related['image']) ?>" alt="<?= htmlspecialchars($related['title']) ?>">
-                                                <?php else: ?>
-                                                    <div style="background: #99cc05; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🎯</div>
-                                                <?php endif; ?>
-                                            </div>
-                                        </div>
-                                        <div class="box-text text-left is-small">
-                                            <div class="box-text-inner blog-post-inner">
-                                                <h5 class="post-title is-large"><?= htmlspecialchars($related['title']) ?></h5>
-                                                <div class="is-divider"></div>
-                                            </div>
-                                        </div>
+                        <div class="post-item">
+                            <a href="detail.php?id=<?= $related['id'] ?>">
+                                <div class="box-image">
+                                    <div class="image-cover">
+                                        <?php if ($related['image']): ?>
+                                            <img src="<?= htmlspecialchars($related['image']) ?>" alt="<?= htmlspecialchars($related['title']) ?>">
+                                        <?php else: ?>
+                                            <div style="background: #2a2a2a; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary-gold);">🎯</div>
+                                        <?php endif; ?>
                                     </div>
-                                </a>
-                            </div>
+                                </div>
+                                <div class="box-text">
+                                    <h5 class="post-title"><?= htmlspecialchars($related['title']) ?></h5>
+                                    <div class="is-divider"></div>
+                                </div>
+                            </a>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -563,10 +694,37 @@ $relatedEvents = getRelatedEvents($event_id);
         </div>
     </div>
 </main>
-<?php include 'includes/fe/footer.php'; ?>
 
+<!-- FOOTER (giữ nguyên nội dung, style đã đồng bộ) -->
+<div class="footer-wrapper">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Về HueShow</h4>
+                <p>Giải pháp sự kiện trọn gói – Chuyên nghiệp, Sáng tạo, Khác biệt.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Liên hệ</h4>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Đường Nguyễn Huệ, TP.HCM</p>
+                <p><i class="fas fa-phone"></i> 0989.898.989</p>
+                <p><i class="fas fa-envelope"></i> info@hueshow.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Mạng xã hội</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 HueShow. All rights reserved.
+        </div>
+    </div>
+</div>
 
-<a href="tel:0989898989" style="position: fixed; bottom: 24px; right: 24px; background: #99cc05; padding: 12px 20px; border-radius: 60px; display: flex; align-items: center; gap: 12px; font-weight: bold; color: #0a0a0a; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,.2); z-index: 99; transition: all 0.3s;">
+<a href="tel:0989898989" class="hotline-fixed">
     <i class="fas fa-phone-alt"></i> Hotline: 0989.898.989
 </a>
 

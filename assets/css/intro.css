@@ -1,0 +1,459 @@
+/* ==================== ĐỒNG BỘ FONT TIMES NEW ROMAN ==================== */
+body, h1, h2, h3, h4, h5, h6, p, a, span, li, div,
+input, textarea, button, select, label,
+.card-title, .card-desc, .widget-title, .section-heading h2,
+.hero h1, .hero p, .slide-caption h2, .btn-slide,
+.nav-link, .brand-title, .brand-tagline, .btn-phone,
+.entry-title, .entry-meta, .single-content, .description,
+.testimonial-text, .testimonial-author, .vmv-title,
+.vmv-card h3, .core-values-title, .core-value-item h4,
+.comments-area h3, .comment-form input, .comment-form textarea,
+.submit-btn, .info-card h4, .info-item, .widget ul li a,
+.recent-posts a, .footer-col h4, .footer-col p, .copyright,
+.hotline-fixed, .btn-primary, .btn-gradient, .btn-icon,
+.btn-outline-icon, .btn-back, .read-more, .card-link,
+.event-meta, .service-meta {
+    font-family: 'Times New Roman', serif !important;
+}
+
+/* Kế thừa biến màu từ :root (đã khai báo trong index.css) */
+/* Nếu intro.css được load riêng, cần khai báo lại biến */
+:root {
+    --gold: #D4A147;
+    --text-primary: #F5F5F0;
+    --text-secondary: #D0D0C8;
+    --text-muted: #A0A098;
+    --dark-bg: #1A1A1A;
+    --dark-bg-secondary: #242424;
+    --dark-bg-tertiary: #2E2E2E;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-gold: 0 8px 20px rgba(212, 161, 71, 0.25);
+    --shadow-lg: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
+}
+
+.intro-hero {
+    background: linear-gradient(120deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.intro-hero h1 {
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    color: var(--gold);
+}
+.intro-hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.9;
+    color: #D0D0C8;
+}
+
+/* ==================== LAYOUT ==================== */
+.row-large {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+.main-content {
+    flex: 2;
+    min-width: 260px;
+    background: #fff;
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.08);
+}
+.sidebar {
+    flex: 1;
+    min-width: 260px;
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+.main-content h2 {
+    font-size: 1.8rem;
+    margin: 24px 0 12px;
+    color: #0f172a;
+    font-weight: 700;
+}
+.main-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: #334155;
+}
+
+/* ==================== HIGHLIGHT BOX ==================== */
+.highlight-box {
+    background: rgba(212,161,71,0.08);
+    border-left: 5px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 0 20px 20px 0;
+    margin: 20px 0;
+}
+.highlight-box i { color: var(--gold); margin-right: 8px; }
+
+/* ==================== BUTTONS ==================== */
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 24px 0 16px;
+}
+.btn-icon, .btn-outline-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: var(--gold);
+    color: #1a1a1a;
+    font-weight: 700;
+    border-radius: 60px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-gold);
+    border: none;
+    cursor: pointer;
+}
+.btn-icon:hover, .btn-outline-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 18px -6px rgba(212,161,71,0.5);
+    background: var(--gold);
+    filter: brightness(1.05);
+    color: #1a1a1a;
+}
+
+/* ==================== SIDEBAR WIDGETS ==================== */
+.widget {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+.widget-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border-left: 5px solid var(--gold);
+    padding-left: 14px;
+    color: #0f172a;
+}
+.recent-posts, .categories { list-style: none; }
+.recent-posts li, .categories li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+.recent-posts a, .categories a {
+    color: #1e293b;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+.recent-posts a:hover, .categories a:hover { color: var(--gold); }
+.recent-posts a i, .categories a i { color: var(--gold); font-size: 0.8rem; }
+
+/* ==================== SERVICES SECTION ==================== */
+.services-section { margin: 60px 0 40px; }
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 3px;
+    background: var(--gold);
+    margin: 12px auto 0;
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+.service-card {
+    background: #1f2937;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(212,161,71,0.15);
+}
+.service-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.service-content { padding: 24px; }
+.service-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.service-title::before {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 10px;
+}
+.service-description {
+    color: #d1d5db;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+/* ==================== FOUNDER ==================== */
+.founder-avatar { flex: 0 0 220px; text-align: center; }
+.avatar-wrapper {
+    width: 200px; height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: var(--gold);
+    padding: 4px;
+    box-shadow: 0 20px 30px -12px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease;
+}
+.avatar-wrapper:hover { transform: scale(1.02); }
+.founder-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: block;
+    background: #f1f5f9;
+}
+.avatar-social {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+.avatar-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    color: #0f172a;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.avatar-social a:hover {
+    background: var(--gold);
+    color: #1a1a1a;
+    transform: translateY(-3px);
+}
+.founder-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: #0f172a;
+}
+.founder-info .title {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: var(--gold);
+    font-weight: 600;
+}
+.founder-info p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #334155;
+}
+.founder-quote {
+    font-style: italic;
+    border-left: 4px solid var(--gold);
+    padding-left: 20px;
+    margin-top: 16px;
+    color: #475569;
+}
+.founder-quote i { color: var(--gold); margin-right: 8px; }
+
+/* ==================== RESPONSIVE ==================== */
+.menu-close-btn { display: none; }
+@media (max-width: 992px) {
+    .nav-list { gap: 8px; }
+    .nav-link { padding: 6px 14px; font-size: 0.85rem; }
+}
+@media (max-width: 768px) {
+    .row-large { flex-direction: column; }
+    .section-title { font-size: 1.6rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .founder-grid { flex-direction: column !important; text-align: center; }
+    .founder-quote { text-align: left; }
+    .main-content { padding: 20px; }
+    .sidebar { position: static; }
+    .avatar-wrapper { width: 150px; height: 150px; }
+    .founder-avatar { flex: 0 0 auto; }
+    .btn-phone { display: none; }
+    .header-brand { width: 65%; padding: 8px 15px 12px 15px; }
+    .brand-logo { width: 48px; height: 48px; }
+    .brand-title { font-size: 1.2rem; }
+    .brand-tagline { font-size: 0.5rem; }
+    .header-cta { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px; height: 40px;
+    }
+    .nav-list {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 280px;
+        max-width: 85vw;
+        height: 100vh;
+        background: #ffffff;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 4px;
+        z-index: 9999;
+        padding: 70px 16px 30px;
+        list-style: none;
+        box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+        transition: right 0.3s ease-out !important;
+        overflow-y: auto;
+    }
+   .nav-list.show {
+    right: 10px !important;  
+}
+    .nav-list li { width: 100%; }
+    .nav-link {
+        display: block;
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 40px;
+        text-align: left;
+        background: transparent;
+        color: #1e2a3a;
+        font-size: 1rem;
+        font-weight: 600;
+        box-shadow: none;
+        transform: none !important;
+    }
+    .nav-link:hover { background: #f1f5f9; color: #0f172a; }
+    .nav-link.active {
+        background: var(--gold) !important;
+        color: #1a1a1a !important;
+        box-shadow: 0 2px 8px rgba(212,161,71,0.3) !important;
+    }
+    body.menu-open::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1999;
+        pointer-events: none;
+    }
+    .menu-close-btn { display: flex; }
+}
+
+/* ==================== THÀNH TỰU ACHIEVEMENTS ==================== */
+.achievements-section {
+    margin: 70px 0 50px;
+}
+
+.achievements-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.achievements-title::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 12px auto 0;
+}
+
+/* Mỗi hàng ngang có thể scroll */
+.achievement-row {
+    margin-bottom: 35px;
+}
+.horizontal-scroll-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 12px 0 20px;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+.horizontal-scroll-row::-webkit-scrollbar {
+    height: 6px;
+}
+.horizontal-scroll-row::-webkit-scrollbar-track {
+    background: #2e2e2e;
+    border-radius: 10px;
+}
+.horizontal-scroll-row::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
+}
+
+/* Item ảnh */
+.achievement-item {
+    flex: 0 0 auto;
+    width: 260px;          /* desktop: ảnh rộng 260px */
+    transition: transform 0.3s ease, box-shadow 0.3s;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background: #1e1e1e;
+}
+.achievement-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(212,161,71,0.2);
+}
+.achievement-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+}
+.achievement-item:hover img {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .achievement-item {
+        width: 85vw;        
+        max-width: 320px;
+    }
+    .achievement-item img {
+        height: 200px;
+    }
+    .horizontal-scroll-row {
+        gap: 15px;
+        padding: 8px 0 15px;
+    }
+}

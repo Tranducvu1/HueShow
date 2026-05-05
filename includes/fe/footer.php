@@ -19,14 +19,7 @@
         gap: 40px;
         margin-bottom: 40px;
     }
-    .footer-col h4 {
-        color: #facc15; /* màu vàng */
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        position: relative;
-        padding-bottom: 12px;
-    }
+   
     .footer-col h4::after {
         content: '';
         position: absolute;
@@ -34,7 +27,6 @@
         left: 0;
         width: 50px;
         height: 2px;
-        background: #facc15;
     }
     .footer-col p {
         margin-bottom: 12px;
@@ -44,12 +36,7 @@
         font-size: 0.95rem;
         line-height: 1.5;
     }
-    .footer-col i {
-        width: 28px;
-        color: #facc15; /* icon vàng */
-        font-size: 1.1rem;
-        text-align: center;
-    }
+
     .social-icons {
         display: flex;
         gap: 16px;
@@ -63,18 +50,11 @@
         height: 44px;
         background: #1e293b;
         border-radius: 50%;
-        color: #facc15;
         font-size: 1.3rem;
         transition: all 0.3s ease;
         text-decoration: none;
     }
-    .social-icon:hover {
-        background: #facc15;
-        color: #0f172a;
-        transform: translateY(-4px);
-        box-shadow: 0 6px 12px rgba(250,204,21,0.3);
-    }
-    /* Hiệu ứng riêng cho từng mạng nếu muốn */
+
     .social-icon.facebook:hover { background: #1877f2; color: white; }
     .social-icon.instagram:hover { background: linear-gradient(45deg, #f09433, #d62976); color: white; }
     .social-icon.youtube:hover { background: #ff0000; color: white; }
@@ -90,7 +70,6 @@
         position: fixed;
         bottom: 30px;
         right: 30px;
-        background: linear-gradient(135deg, #facc15, #eab308);
         color: #0f172a;
         padding: 12px 24px;
         border-radius: 60px;
@@ -148,9 +127,8 @@
             <div class="footer-col">
                 <h4>Kết nối</h4>
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/share/1EHuD3PM1f/" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtu.be/X4eE5x5NKjY?si=65dS2L3jhIzIb54J" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/huesukien" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@HueShowMediaEvent" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>

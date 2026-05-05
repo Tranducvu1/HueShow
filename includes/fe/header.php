@@ -14,13 +14,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link rel="shortcut icon" type="image/jpeg" href="assets/logo.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/index.css">
 </head>
 <body>
-
 <header class="main-header">
     <div class="container header-content">
-        <!-- LEFT: Brand / Logo -->
+
+        <!-- LEFT: Brand -->
         <div class="header-brand">
             <img src="assets/logo.jpg" alt="HueShow" class="brand-logo">
             <div class="brand-info">
@@ -30,9 +30,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
 
         <!-- CENTER: Navigation -->
-        <nav class="header-nav">
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <i class="fas fa-bars"></i>
+        <nav class="header-nav" id="headerNav" aria-label="Điều hướng chính">
+            <button class="menu-close-btn" id="menuCloseBtn" type="button" aria-label="Đóng menu">
+                <i class="fas fa-times"></i>
             </button>
             <ul class="nav-list" id="navList">
                 <li><a href="index.php" class="nav-link <?= $current_page == 'index.php' ? 'active' : '' ?>">Trang chủ</a></li>
@@ -48,10 +48,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-phone-alt"></i>
                 <span class="phone-text">097 966 37 27</span>
             </a>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Mở menu" aria-controls="headerNav" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+
     </div>
 </header>
-
-<script src="../assets/js/main.js"></script>
-</body>
-</html>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/script.js"></script>
