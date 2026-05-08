@@ -15,11 +15,78 @@ if (!function_exists('fixImagePath')) {
 
 $page_title = 'Sự kiện';
 
+$projectCategories = [
+    'entertainment-game-show' => 'ENTERTAINMENT GAME SHOW',
+    'dance-festival' => 'DANCE FESTIVAL',
+    'teambuilding-du-an' => 'TEAMBUILDING',
+    'fashion-show' => 'FASHION SHOW',
+    'chuong-trinh-yep' => 'CHƯƠNG TRÌNH YEP',
+];
+
+$selectedProject = isset($_GET['project']) ? trim($_GET['project']) : '';
+$selectedYear = isset($_GET['year']) ? trim($_GET['year']) : '';
+$searchKeyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+
 if (function_exists('getLatestEvents')) {
-    $events = getLatestEvents(8);  // lấy 8 sự kiện mới nhất
+    $events = getLatestEvents(24);
 } else {
-    $events = getAllEvents();      // fallback nếu không có hàm
+    $events = getAllEvents();
 }
+
+foreach ($events as &$event) {
+    $haystack = mb_strtolower(($event['title'] ?? '') . ' ' . ($event['description'] ?? ''), 'UTF-8');
+    $event['project_category'] = 'entertainment-game-show';
+
+    if (str_contains($haystack, 'dance') || str_contains($haystack, 'festival') || str_contains($haystack, 'nhảy')) {
+        $event['project_category'] = 'dance-festival';
+    } elseif (str_contains($haystack, 'team') || str_contains($haystack, 'building')) {
+        $event['project_category'] = 'teambuilding-du-an';
+    } elseif (str_contains($haystack, 'fashion') || str_contains($haystack, 'thời trang')) {
+        $event['project_category'] = 'fashion-show';
+    } elseif (str_contains($haystack, 'yep') || str_contains($haystack, 'year end') || str_contains($haystack, 'cuối năm')) {
+        $event['project_category'] = 'chuong-trinh-yep';
+    }
+}
+unset($event);
+
+$availableYears = [];
+foreach ($events as $event) {
+    $dateSource = !empty($event['event_date']) ? $event['event_date'] : ($event['created_at'] ?? '');
+    if (!empty($dateSource)) {
+        $year = date('Y', strtotime($dateSource));
+        if ($year) $availableYears[] = $year;
+    }
+}
+$availableYears = array_values(array_unique($availableYears));
+rsort($availableYears);
+
+$events = array_values(array_filter($events, function ($event) use ($selectedProject, $selectedYear, $searchKeyword) {
+    $matchesProject = true;
+    $matchesYear = true;
+    $matchesSearch = true;
+
+    if ($selectedProject !== '') {
+        $matchesProject = ($event['project_category'] ?? '') === $selectedProject;
+    }
+
+    if ($selectedYear !== '') {
+        $dateSource = !empty($event['event_date']) ? $event['event_date'] : ($event['created_at'] ?? '');
+        $matchesYear = !empty($dateSource) && date('Y', strtotime($dateSource)) === $selectedYear;
+    }
+
+    if ($searchKeyword !== '') {
+        $haystack = mb_strtolower(($event['title'] ?? '') . ' ' . ($event['description'] ?? ''), 'UTF-8');
+        $needle = mb_strtolower($searchKeyword, 'UTF-8');
+        $matchesSearch = str_contains($haystack, $needle);
+    }
+
+    return $matchesProject && $matchesYear && $matchesSearch;
+}));
+
+if ($selectedProject !== '' && isset($projectCategories[$selectedProject])) {
+    $page_title = $projectCategories[$selectedProject];
+}
+
 $recentPosts = getLatestArticles(5);
 
 include 'includes/fe/header.php';
@@ -223,6 +290,69 @@ font-family: 'Times New Roman', sans-serif;
 .main-col { flex: 2; }
 .side-col { flex: 1; }
 
+/* ==================== FILTER FORM ==================== */
+.filter-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr) minmax(0, 0.8fr) auto;
+    gap: 16px;
+    align-items: end;
+    background: linear-gradient(135deg,#1A1A1A,#242424);
+    padding: 22px;
+    border-radius: 24px;
+    border: 1px solid rgba(212,161,71,0.2);
+    box-shadow: var(--shadow-md);
+}
+.filter-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--primary-gold);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.filter-field input,
+.filter-field select {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(212,161,71,0.25);
+    background: #2a2a2a;
+    color: var(--text-primary);
+    outline: none;
+}
+.filter-field input:focus,
+.filter-field select:focus {
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 3px rgba(212,161,71,0.12);
+}
+.filter-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.filter-actions button,
+.filter-actions a {
+    min-height: 52px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    text-decoration: none;
+}
+.filter-actions button {
+    border: none;
+    background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+    color: #1a1a1a;
+    cursor: pointer;
+}
+.filter-actions a {
+    border: 1px solid rgba(212,161,71,0.25);
+    color: var(--text-primary);
+    background: #2a2a2a;
+}
+
 /* ==================== GRID CARDS ==================== */
 .grid-cards {
     display: grid;
@@ -334,12 +464,24 @@ font-family: 'Times New Roman', sans-serif;
 .recent-posts a i {
     color: var(--primary-gold);
 }
-.video-widget iframe {
-    width: 100%;
-    border-radius: 16px;
-    border: 1px solid rgba(212,161,71,0.3);
-    aspect-ratio: 16/9;
-}
+    .video-widget {
+        position: relative;
+        height: 250px;  
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .video-widget iframe {
+        position: absolute;
+        top:0; left:0;
+        width:100%; height:100%;
+    }
+    .video-widget video {
+        width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        border: 1px solid rgba(212,161,71,0.3);
+    }
+
 
 /* ==================== FOOTER ==================== */
 .footer {
@@ -410,6 +552,15 @@ font-family: 'Times New Roman', sans-serif;
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 992px) {
     .two-columns { flex-direction: column; }
+    .filter-form {
+        grid-template-columns: 1fr 1fr;
+    }
+    .filter-field-search {
+        grid-column: 1 / -1;
+    }
+    .filter-actions {
+        grid-column: 1 / -1;
+    }
 }
 @media (max-width: 768px) {
     .btn-phone .phone-text { display: none; }
@@ -428,69 +579,104 @@ font-family: 'Times New Roman', sans-serif;
     .hero-event h1 { font-size: 2rem; }
     .grid-cards { grid-template-columns: 1fr; gap: 24px; }
     .widget { margin-bottom: 20px; }
+    .filter-form {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 14px;
+    }
+    .filter-field-search,
+    .filter-actions {
+        grid-column: auto;
+    }
+    .filter-actions {
+        grid-template-columns: 1fr;
+    }
 }
 @media (max-width: 576px) {
     .hero-event h1 { font-size: 1.6rem; }
     .hero-event p { font-size: 1rem; }
+    .filter-field label {
+        font-size: 0.9rem;
+    }
+    .filter-field input,
+    .filter-field select,
+    .filter-actions button,
+    .filter-actions a {
+        min-height: 48px;
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
 }
 </style>
 
 <section class="hero-event">
     <div class="container">
-        <h1>🎉 DỰ ÁN TIÊU BIỂU</h1>
+        <h1>🎉 <?= htmlspecialchars($selectedProject !== '' && isset($projectCategories[$selectedProject]) ? $projectCategories[$selectedProject] : 'DỰ ÁN TIÊU BIỂU') ?></h1>
         <p>Chúng tôi tự hào là đơn vị tổ chức hàng trăm sự kiện lớn nhỏ – từ hội nghị, lễ hội đến các chương trình tri ân khách hàng.</p>
     </div>
 </section>
 
-<div class="container">
-    <div class="two-columns">
-        <div class="main-col">
-            <div class="grid-cards">
-                <?php foreach ($events as $event): ?>
-                <a href="event_detail.php?id=<?= $event['id'] ?>" class="event-card">
-                    <div class="card-img">
-                        <?php if (!empty($event['image'])): ?>
-                            <img src="<?= htmlspecialchars(fixImagePath($event['image'])) ?>" alt="<?= htmlspecialchars($event['title']) ?>">
-                        <?php else: ?>
-                            <div style="background: #2a2a2a; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--primary-gold); font-size:2rem;">🎪</div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title"><?= htmlspecialchars($event['title']) ?></h3>
-                        <div class="card-date"><i class="far fa-calendar-alt"></i> <?= date('d/m/Y', strtotime($event['created_at'])) ?></div>
-                        <p class="card-desc"><?= cleanText(substr($event['description'] ?? '', 0, 100)) ?>...</p>
-                    </div>
-                </a>
+<div class="container" style="margin-bottom: 30px;">
+    <form method="GET" action="events.php" class="filter-form">
+        <div class="filter-field filter-field-search">
+            <label for="searchFilter">Tìm kiếm dự án</label>
+            <input id="searchFilter" type="text" name="search" value="<?= htmlspecialchars($searchKeyword) ?>" placeholder="Nhập tên dự án hoặc từ khóa...">
+        </div>
+        <div class="filter-field">
+            <label for="projectFilter">Lọc theo dự án</label>
+            <select id="projectFilter" name="project">
+                <option value="">Tất cả dự án</option>
+                <?php foreach ($projectCategories as $slug => $label): ?>
+                    <option value="<?= htmlspecialchars($slug) ?>" <?= $selectedProject === $slug ? 'selected' : '' ?>><?= htmlspecialchars($label) ?></option>
                 <?php endforeach; ?>
-            </div>
+            </select>
         </div>
+        <div class="filter-field">
+            <label for="yearFilter">Chọn năm</label>
+            <select id="yearFilter" name="year">
+                <option value="">Tất cả năm</option>
+                <?php foreach ($availableYears as $year): ?>
+                    <option value="<?= htmlspecialchars($year) ?>" <?= $selectedYear === (string)$year ? 'selected' : '' ?>><?= htmlspecialchars($year) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="filter-actions">
+            <button type="submit">Lọc</button>
+            <a href="events.php">Reset</a>
+        </div>
+    </form>
+</div>
 
-        <div class="side-col">
-            <div class="widget">
-                <div class="widget-title">📌 Về sự kiện</div>
-                <p>HueShow chuyên tổ chức các chương trình hội nghị, lễ hội, sự kiện doanh nghiệp với quy mô từ 50 đến hàng nghìn khách mời.</p>
-            </div>
-            <div class="widget">
-                <div class="widget-title">📰 Bài viết mới</div>
-                <ul class="recent-posts">
-                    <?php if (!empty($recentPosts)): ?>
-                        <?php foreach ($recentPosts as $post): ?>
-                            <li><a href="articles.php?id=<?= $post['id'] ?>"><i class="fas fa-angle-right"></i> <?= htmlspecialchars($post['title']) ?></a></li>
-                        <?php endforeach; ?>
+<div class="container">
+    <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); margin-bottom: 60px;">
+        <?php if (!empty($events)): ?>
+            <?php foreach ($events as $event): ?>
+            <a href="event_detail.php?id=<?= $event['id'] ?>" class="event-card">
+                <div class="card-img">
+                    <?php if (!empty($event['image'])): ?>
+                        <img src="<?= htmlspecialchars(fixImagePath($event['image'])) ?>" alt="<?= htmlspecialchars($event['title']) ?>">
                     <?php else: ?>
-                        <li>Chưa có bài viết nào.</li>
+                        <div style="background: #2a2a2a; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--primary-gold); font-size:2rem;">🎪</div>
                     <?php endif; ?>
-                </ul>
+                </div>
+                <div class="card-content">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+                        <span style="display:inline-flex; align-items:center; padding:6px 12px; border-radius:999px; background:rgba(212,161,71,0.12); color:var(--primary-gold); font-size:0.78rem; font-weight:800; text-transform:uppercase;">
+                            <?= htmlspecialchars($projectCategories[$event['project_category']] ?? 'Dự án') ?>
+                        </span>
+                        <span class="card-date" style="margin-bottom:0;"><i class="far fa-calendar-alt"></i> <?= date('d/m/Y', strtotime(!empty($event['event_date']) ? $event['event_date'] : $event['created_at'])) ?></span>
+                    </div>
+                    <h3 class="card-title"><?= htmlspecialchars($event['title']) ?></h3>
+                    <p class="card-desc"><?= cleanText(substr($event['description'] ?? '', 0, 140)) ?>...</p>
+                    <span class="read-more" style="margin-top:16px;">Xem chi tiết <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div style="grid-column:1 / -1; background:linear-gradient(135deg,#1A1A1A,#242424); border:1px solid rgba(212,161,71,0.2); border-radius:24px; padding:40px 24px; text-align:center; color:var(--text-secondary);">
+                Không tìm thấy dự án phù hợp với bộ lọc đã chọn.
             </div>
-            <div class="widget video-widget">
-                <div class="widget-title">🎥 Video sự kiện</div>
-                <iframe src="https://www.youtube.com/embed/_ltAd7y-jRw" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="widget">
-                <div class="widget-title">🤝 Khách hàng tiêu biểu</div>
-                <p>Nha Khoa Nụ Cười Việt, Honda, Sunhouse, Panasonic, VPBank, Agribank, Tetra Pak, Boehringer...</p>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
 

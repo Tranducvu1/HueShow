@@ -1,8 +1,6 @@
 <?php
-// event_detail.php - Chi tiết sự kiện
 require_once 'config.php';
 
-// Định nghĩa hàm fixImagePath nếu chưa có (config.php thiếu)
 if (!function_exists('fixImagePath')) {
     function fixImagePath($path) {
         if (empty($path)) return '';
@@ -13,28 +11,78 @@ if (!function_exists('fixImagePath')) {
     }
 }
 
+$eventSlug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-if ($id <= 0) {
-    header('Location: events.php');
-    exit;
+
+$eventPresetMap = [
+    'entertainment-game-show' => [
+        'title' => 'ENTERTAINMENT GAME SHOW',
+        'description' => 'HueShow triển khai các entertainment game show với concept trẻ trung, tương tác cao và giàu năng lượng. Từ ý tưởng sân khấu, thiết kế trò chơi, MC dẫn dắt đến vận hành kỹ thuật, chúng tôi giúp chương trình thu hút khán giả, tăng độ gắn kết và lan tỏa hình ảnh thương hiệu.',
+        'image' => 'uploads/logo/logo1.jpg',
+        'created_at' => date('Y-m-d H:i:s'),
+        'event_date' => date('Y-m-d'),
+        'featured' => 1
+    ],
+    'dance-festival' => [
+        'title' => 'DANCE FESTIVAL',
+        'description' => 'Các dự án dance festival do HueShow thực hiện luôn đề cao yếu tố bùng nổ sân khấu, ánh sáng, âm thanh và trải nghiệm khán giả. Chúng tôi phối hợp chặt chẽ từ casting, biên đạo, flow chương trình đến vận hành thực tế để tạo nên một lễ hội nhảy múa chuyên nghiệp và cuốn hút.',
+        'image' => 'uploads/logo/logo2.jpg',
+        'created_at' => date('Y-m-d H:i:s'),
+        'event_date' => date('Y-m-d'),
+        'featured' => 1
+    ],
+    'teambuilding-du-an' => [
+        'title' => 'TEAMBUILDING',
+        'description' => 'HueShow tổ chức các dự án teambuilding sáng tạo theo mục tiêu riêng của doanh nghiệp như kết nối nội bộ, truyền lửa đội nhóm, tái tạo năng lượng hay ra quân chiến dịch. Mỗi chương trình được thiết kế riêng về concept, trò chơi, nhân sự và vận hành để mang lại hiệu quả thật sự.',
+        'image' => 'uploads/logo/logo3.jpg',
+        'created_at' => date('Y-m-d H:i:s'),
+        'event_date' => date('Y-m-d'),
+        'featured' => 1
+    ],
+    'fashion-show' => [
+        'title' => 'FASHION SHOW',
+        'description' => 'Dự án fashion show được HueShow thực hiện với sự đầu tư chỉn chu về catwalk, ánh sáng, âm nhạc, visual và trải nghiệm khách mời. Chúng tôi mang đến không gian trình diễn đậm tính thẩm mỹ, giúp bộ sưu tập và thương hiệu được tôn vinh một cách nổi bật nhất.',
+        'image' => 'uploads/logo/logo4.jpg',
+        'created_at' => date('Y-m-d H:i:s'),
+        'event_date' => date('Y-m-d'),
+        'featured' => 1
+    ],
+    'chuong-trinh-yep' => [
+        'title' => 'CHƯƠNG TRÌNH YEP',
+        'description' => 'Chương trình YEP do HueShow triển khai kết hợp giữa gala, vinh danh, biểu diễn và truyền cảm hứng cho tập thể doanh nghiệp. Chúng tôi xây dựng nội dung cảm xúc, chỉn chu hình ảnh sân khấu và tối ưu dòng cảm xúc để khép lại một năm thật đáng nhớ và tạo động lực cho chặng đường mới.',
+        'image' => 'uploads/logo/logo5.jpg',
+        'created_at' => date('Y-m-d H:i:s'),
+        'event_date' => date('Y-m-d'),
+        'featured' => 1
+    ]
+];
+
+if ($eventSlug !== '' && isset($eventPresetMap[$eventSlug])) {
+    $event = $eventPresetMap[$eventSlug];
+    $event['id'] = 0;
+    $page_title = htmlspecialchars($event['title']);
+    $otherEvents = [];
+} else {
+    if ($id <= 0) {
+        header('Location: events.php');
+        exit;
+    }
+
+    $event = getEventById($id);
+    if (!$event) {
+        $all = getAllEvents();
+        die("Không tìm thấy sự kiện ID = $id. Có " . count($all) . " sự kiện trong DB. 
+             Kiểm tra bảng events có bản ghi id=$id và status='published' không.");
+    }
+
+    $page_title = htmlspecialchars($event['title']);
+
+    $allEvents = getLatestEvents(6);
+    $otherEvents = array_filter($allEvents, function($e) use ($id) {
+        return $e['id'] != $id;
+    });
+    $otherEvents = array_slice($otherEvents, 0, 4);
 }
-
-$event = getEventById($id);
-if (!$event) {
-    // Thử lấy tất cả sự kiện để debug (tạm thời)
-    $all = getAllEvents();
-    die("Không tìm thấy sự kiện ID = $id. Có " . count($all) . " sự kiện trong DB. 
-         Kiểm tra bảng events có bản ghi id=$id và status='published' không.");
-}
-
-$page_title = htmlspecialchars($event['title']);
-
-// Lấy 4 sự kiện khác (không bao gồm sự kiện hiện tại)
-$allEvents = getLatestEvents(6);
-$otherEvents = array_filter($allEvents, function($e) use ($id) {
-    return $e['id'] != $id;
-});
-$otherEvents = array_slice($otherEvents, 0, 4);
 
 include 'includes/fe/header.php';
 ?>
@@ -70,7 +118,6 @@ body {
 
 .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
 
-/* ==================== HEADER ==================== */
 .main-header {
     background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(36,36,36,0.95) 100%);
     padding: 12px 0;
@@ -457,7 +504,9 @@ body {
 
 <section class="event-detail-hero">
     <div class="container">
-        <h1><?= htmlspecialchars($event['title']) ?></h1>
+         <div class="section-heading">
+        <h2><?= htmlspecialchars($event['title']) ?></h2>
+        </div>
         <div class="event-meta">
             <span><i class="far fa-calendar-alt"></i> Đăng: <?= date('d/m/Y', strtotime($event['created_at'])) ?></span>
             <?php if (!empty($event['event_date'])): ?>

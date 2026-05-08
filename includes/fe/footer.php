@@ -132,7 +132,7 @@
                 </div>
             </div>
         </div>
-        <div class="copyright">© 2026 HueShow - Team Building & Events. All rights reserved.</div>
+        <div class="copyright">© 2026 HueShow - Media &Events. All rights reserved.</div>
     </div>
 </footer>
 

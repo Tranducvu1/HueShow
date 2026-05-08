@@ -67,28 +67,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ==================== HEADER HIDE ON SCROLL ====================
+    // ==================== KEEP HEADER STABLE ====================
     const header = document.querySelector('.main-header');
     if (header) {
-        let lastScroll = 0, ticking = false;
+        header.style.transform = 'none';
         window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const cur = window.pageYOffset;
-                    if (cur > 100 && window.innerWidth > 768 && !document.body.classList.contains('menu-open')) {
-                        header.style.transform = (cur > lastScroll) ? 'translateY(-100%)' : 'translateY(0)';
-                    } else if (window.innerWidth <= 768 || document.body.classList.contains('menu-open')) {
-                        header.style.transform = 'none';
-                    }
-                    lastScroll = cur;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-        header.addEventListener('mouseenter', () => {
-            header.style.transform = 'translateY(0)';
-        });
+            header.style.transform = 'none';
+        }, { passive: true });
     }
 
     // ==================== SLIDER ====================

@@ -245,42 +245,44 @@ include 'includes/fe/header.php';
 
     /* ==================== LAYOUT & CARDS (DARK THEME) ==================== */
     .row-large {
-        display: flex;
-        gap: 40px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.85fr);
+        gap: 32px;
         margin-bottom: 40px;
+        align-items: start;
     }
     .main-content {
-        flex: 2;
-        min-width: 260px;
+        min-width: 0;
         background: linear-gradient(135deg, #1A1A1A, #242424);
         border-radius: 28px;
-        padding: 28px;
+        padding: 34px;
         box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
         border: 1px solid rgba(212,161,71,0.2);
     }
     .sidebar {
-        flex: 1;
-        min-width: 260px;
+        min-width: 0;
         position: sticky;
         top: 100px;
         align-self: start;
     }
     .main-content h2 {
-        font-size: 1.8rem;
-        margin: 24px 0 12px;
+        font-size: 1.55rem;
+        margin: 28px 0 14px;
         color: var(--primary-gold);
-        font-weight: 700;
+        font-weight: 800;
+        line-height: 1.35;
     }
     .main-content p {
         margin-bottom: 1rem;
-        line-height: 1.6;
+        line-height: 1.75;
         color: var(--text-secondary);
+        font-size: 1rem;
     }
     .highlight-box {
-        background: rgba(212,161,71,0.12);
+        background: linear-gradient(135deg, rgba(212,161,71,0.14), rgba(212,161,71,0.06));
+        border: 1px solid rgba(212,161,71,0.24);
         border-left: 5px solid var(--primary-gold);
-        padding: 16px 20px;
+        padding: 18px 22px;
         border-radius: 20px;
         margin: 20px 0;
         color: var(--text-secondary);
@@ -316,7 +318,7 @@ include 'includes/fe/header.php';
     .widget {
         background: linear-gradient(135deg, #1A1A1A, #242424);
         border-radius: 24px;
-        padding: 20px;
+        padding: 22px;
         margin-bottom: 24px;
         box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         border: 1px solid rgba(212,161,71,0.2);
@@ -348,6 +350,17 @@ include 'includes/fe/header.php';
     .recent-posts a:hover, .categories a:hover {
         color: var(--primary-gold);
     }
+      .video-widget {
+        position: relative;
+        height: 250px;  
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .video-widget iframe {
+        position: absolute;
+        top:0; left:0;
+        width:100%; height:100%;
+    }
     .video-widget video {
         width: 100%;
         border-radius: 16px;
@@ -357,7 +370,7 @@ include 'includes/fe/header.php';
 
     /* Dịch vụ - service card */
     .services-section {
-        margin: 60px 0 40px;
+        margin: 70px 0 40px;
     }
     .section-title {
         text-align: center;
@@ -376,11 +389,11 @@ include 'includes/fe/header.php';
         background: linear-gradient(90deg, var(--primary-gold), var(--primary-gold-light));
         margin: 12px auto 0;
     }
-    .services-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 30px;
-    }
+   .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
     .service-card {
         background: linear-gradient(135deg, #1A1A1A, #242424);
         border-radius: 20px;
@@ -421,13 +434,18 @@ include 'includes/fe/header.php';
 
     /* Founder section */
     .founder-grid {
-        display: flex;
-        gap: 40px;
-        flex-wrap: wrap;
-        margin-bottom: 60px;
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 32px;
+        align-items: center;
+        margin-bottom: 40px;
+        background: linear-gradient(135deg, #1A1A1A, #242424);
+        border: 1px solid rgba(212,161,71,0.2);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
     }
     .founder-avatar {
-        flex: 0 0 220px;
         text-align: center;
     }
     .avatar-wrapper {
@@ -553,7 +571,6 @@ include 'includes/fe/header.php';
         color: var(--text-muted);
     }
 
-    /* ==================== THÀNH TỰU ACHIEVEMENTS ==================== */
     .achievements-section {
         margin: 70px 0 50px;
     }
@@ -656,6 +673,40 @@ include 'includes/fe/header.php';
         position: relative;
         padding-bottom: 12px;
     }
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: 3px solid var(--primary-gold);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+.lightbox .close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.lightbox .close-lightbox:hover {
+    color: var(--primary-gold);
+}
     .footer-col h4::after {
         content: '';
         position: absolute;
@@ -710,7 +761,12 @@ include 'includes/fe/header.php';
 
     /* ==================== RESPONSIVE ==================== */
     @media (max-width: 992px) {
-        .row-large { flex-direction: column; }
+        .row-large {
+            grid-template-columns: 1fr;
+        }
+        .founder-grid {
+            grid-template-columns: 1fr;
+        }
         .section-heading h2 { font-size: 1.8rem; }
     }
     @media (max-width: 768px) {
@@ -730,12 +786,14 @@ include 'includes/fe/header.php';
         .hero h1 { font-size: 2rem; }
         .section-heading h2 { font-size: 1.6rem; }
         .services-grid { grid-template-columns: 1fr; }
-        .founder-grid { flex-direction: column; text-align: center; }
+        .founder-grid { text-align: center; padding: 22px; }
         .founder-quote { text-align: left; }
-        .main-content { padding: 20px; }
+        .main-content { padding: 22px; }
         .sidebar { position: static; }
         .avatar-wrapper { width: 150px; height: 150px; }
         .founder-avatar { flex: 0 0 auto; }
+        .intro-hero { padding: 64px 0; }
+        .intro-hero p { font-size: 1rem; }
     }
 </style>
 
@@ -755,6 +813,9 @@ include 'includes/fe/header.php';
                 <img src="uploads/team/Tran_The_Phong.jpg" 
                      alt="Trần Thế Phong - Nhà sáng lập HueShow" 
                      class="founder-img"
+                     loading="eager"
+                     fetchpriority="high"
+                     decoding="async"
                      onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?background=facc15&color=0f172a&bold=true&size=180&name=TP';">
             </div>
             <div class="avatar-social">
@@ -784,13 +845,49 @@ include 'includes/fe/header.php';
             <p>Tập hợp những chuyên gia giàu kinh nghiệm, hội tụ đầy đủ yếu tố "Tâm - Trí - Lực". Chúng tôi không ngừng sáng tạo để biến mọi ý tưởng thành hiện thực hoàn hảo nhất. Chúng tôi đã tổ chức thành công hàng trăm sự kiện lớn nhỏ cho các tập đoàn, doanh nghiệp trong và ngoài nước.</p>
 
             <h2>🎯 Lĩnh vực hoạt động chính</h2>
-            <ul style="margin-left: 24px; color: var(--text-secondary); margin-bottom: 24px;">
+
+            <ul class="intro-feature-list">
                 <li><strong>Tổ chức sự kiện doanh nghiệp:</strong> Hội nghị, hội thảo, Gala dinner, khai trương, kỷ niệm.</li>
                 <li><strong>Team Building:</strong> Các chương trình gắn kết nhân viên, đào tạo kỹ năng mềm, thể thao đồng đội.</li>
                 <li><strong>Sản xuất Media & Truyền thông:</strong> Quay phim, chụp ảnh, thiết kế hình ảnh, video clip quảng bá.</li>
                 <li><strong>Cho thuê thiết bị & Đạo cụ:</strong> Âm thanh, ánh sáng, sân khấu, dụng cụ team building.</li>
-                <li><strong> Hỗ trợ nhân sự – Cộng tác viên sự kiện:</strong> Cung cấp MC chuyên nghiệp, PG, khánh tiết, lễ tân, mascot, dancer, nhân viên hậu cần, bảo vệ, kỹ thuật ánh sáng – âm thanh,… Đáp ứng mọi quy mô sự kiện.</li>
+
+                <li><strong>Hỗ trợ nhân sự – Cộng tác viên sự kiện:</strong> Cung cấp MC chuyên nghiệp, PG, khánh tiết, lễ tân, mascot, dancer, nhân viên hậu cần, bảo vệ, kỹ thuật ánh sáng – âm thanh,… Đáp ứng mọi quy mô sự kiện.</li>
             </ul>
+
+
+
+            <div class="intro-info-group">
+                <h2>📌 Về sự kiện</h2>
+                <ul class="intro-feature-list">
+                    <li>HueShow chuyên tổ chức các chương trình hội nghị, lễ hội, sự kiện doanh nghiệp với quy mô từ 50 đến hàng nghìn khách mời.</li>
+                </ul>
+            </div>
+
+
+
+
+
+
+
+            <div class="intro-info-group">
+                <h2>📰 Hoạt động nổi bật</h2>
+                <ul class="intro-feature-list">
+                    <li>HUẾ SHOW TUYỂN DANCER HOẠT NÁO &amp; SHOWCASE</li>
+                    <li>📢📢📢 Thông báo</li>
+                    <li>DANCE CLASS – CHIÊU SINH LỚP NHẢY 0 ĐỒNG</li>
+                    <li>TUYỂN DỤNG NHÂN VIÊN SỰ KIỆN / CHẠY VIỆC EVENT</li>
+                </ul>
+            </div>
+
+
+
+            <div class="intro-info-group">
+                <h2>🤝 Khách hàng &amp; đối tác tiêu biểu</h2>
+                <ul class="intro-feature-list">
+                    <li>Nha Khoa Nụ Cười Việt, Honda, Sunhouse, Panasonic, VPBank, Agribank, Tetra Pak, Boehringer...</li>
+                </ul>
+            </div>
 
             <div class="btn-group">
                 <a href="contact.php" class="btn-icon"><i class="fas fa-calendar-check"></i> Nhận tư vấn ngay</a>
@@ -832,12 +929,10 @@ include 'includes/fe/header.php';
                 </ul>
             </div>
             <div class="widget video-widget">
-                <div class="widget-title">🎥 Video giới thiệu</div>
-                <video controls muted loop>
+                <video controls muted preload="metadata" playsinline>
                     <source src="uploads/video/first.mp4" type="video/mp4">
                     Trình duyệt của bạn không hỗ trợ video HTML5.
                 </video>
-                <p style="font-size: 0.8rem; margin-top: 8px; color: var(--text-muted);">Video giới thiệu về <?= htmlspecialchars($company_name) ?></p>
             </div>
         </div>
     </div>
@@ -854,14 +949,12 @@ include 'includes/fe/header.php';
                 <div class="horizontal-scroll-row">
                     <?php for ($i = 0; $i < $count; $i++): 
                         $imageNumber = $counter++;
-                        $imagePath = "uploads/achievements/achievements{$imageNumber}.jpg";
-                        // Kiểm tra file tồn tại (có thể dùng file_exists, nhưng tạm bỏ qua để tránh lỗi open_basedir)
-                        // Nếu muốn kiểm tra an toàn: if (!file_exists($imagePath)) $imagePath = "https://placehold.co/400x300/242424/D4A147?text=Achievement+{$imageNumber}";
-                        // Ở đây tạm dùng ảnh thật, nếu thiếu sẽ hiển thị lỗi 404, bạn có thể thay bằng placeholder
+                        $imagePath = "uploads/achievements/achievements{$imageNumber}.png";
+                       
                         if (!file_exists($imagePath)) $imagePath = "https://placehold.co/400x300/242424/D4A147?text=Thanh+tuu+{$imageNumber}";
                     ?>
                     <div class="achievement-item">
-                        <img src="<?= htmlspecialchars($imagePath) ?>" alt="Thành tựu <?= $imageNumber ?>">
+                        <img src="<?= htmlspecialchars($imagePath) ?>" alt="Thành tựu <?= $imageNumber ?>" loading="lazy" decoding="async">
                     </div>
                     <?php endfor; ?>
                 </div>
@@ -905,8 +998,6 @@ include 'includes/fe/header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-
-    // ========== MOBILE MENU ==========
     const toggleBtn = document.getElementById('navToggle');
     const navList   = document.getElementById('navList');
 
@@ -982,7 +1073,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ========== DRAG TO SCROLL FOR ACHIEVEMENTS ==========
     document.querySelectorAll('.horizontal-scroll-row').forEach(row => {
         let isDown = false;
         let startX;
@@ -1002,6 +1092,35 @@ document.addEventListener('DOMContentLoaded', function () {
             row.scrollLeft = scrollLeft - walk;
         });
     });
+});
+
+const lightbox = document.createElement('div');
+lightbox.className = 'lightbox';
+lightbox.innerHTML = `
+    <span class="close-lightbox">&times;</span>
+    <img src="" alt="Phóng to">
+`;
+document.body.appendChild(lightbox);
+
+const lightboxImg = lightbox.querySelector('img');
+const closeBtn = lightbox.querySelector('.close-lightbox');
+
+document.querySelectorAll('.achievement-item img').forEach(img => {
+    img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+    });
+});
+
+function closeLightbox() {
+    lightbox.style.display = 'none';
+    lightboxImg.src = '';
+}
+lightbox.addEventListener('click', closeLightbox);
+closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeLightbox();
 });
 </script>
 

@@ -5,7 +5,83 @@ $page_title = 'Trang chủ';
 $banners = getActiveBanners(); 
 $teamBuildingEvents = getTeamBuildingEvents(4);
 $latestEvents = getLatestEvents(8);
-$testimonials = getAllTestimonials(8);
+
+$sponsorTestimonials = [
+    [
+        'name' => 'Đại diện VPBank',
+        'position' => 'Giám đốc Marketing',
+        'company' => 'VPBank',
+        'content' => 'Dịch vụ tổ chức sự kiện chuyên nghiệp, sáng tạo vượt mong đợi. Chương trình team building đã kết nối toàn thể nhân viên và tạo nên những kỷ niệm khó quên.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo1.jpg'
+    ],
+    [
+        'name' => 'Ông Nguyễn Khoa Phú',
+        'position' => 'Giám đốc Điều hành',
+        'company' => 'Hệ thống Nha khoa Nụ Cười Việt',
+        'content' => 'Sự kiện ra mắt chi nhánh mới được tổ chức rất chuyên nghiệp từ khâu lên ý tưởng đến hậu cần. Đội ngũ tư vấn nhiệt tình, chúng tôi cực kỳ hài lòng.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo2.jpg'
+    ],
+    [
+        'name' => 'Bà Lê Thị Hương',
+        'position' => 'Trưởng phòng Truyền thông',
+        'company' => 'Sunhouse',
+        'content' => 'Chúng tôi đã hợp tác nhiều năm với đội ngũ và luôn nhận được sự chuyên nghiệp, tận tâm. Các chương trình team building giúp gắn kết nhân viên rất hiệu quả.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo3.jpg'
+    ],
+    [
+        'name' => 'Ông Trần Minh Hoàng',
+        'position' => 'Phó Tổng Giám đốc',
+        'company' => 'Honda Việt Nam',
+        'content' => 'Sự kiện khách hàng thân thiết của Honda đã thành công vượt mong đợi. Cảm ơn đội ngũ đã đưa ra ý tưởng độc đáo và hỗ trợ chu đáo từ A đến Z.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo4.jpg'
+    ],
+    [
+        'name' => 'Đại diện Agribank',
+        'position' => 'Trưởng ban Tổ chức',
+        'company' => 'Agribank',
+        'content' => 'Hội nghị khách hàng lớn nhất năm được tổ chức hoàn hảo, không một sự cố. Chuyên nghiệp, uy tín và cực kỳ sáng tạo!',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo5.jpg'
+    ],
+    [
+        'name' => 'Bà Nguyễn Thu Hà',
+        'position' => 'Giám đốc Nhân sự',
+        'company' => 'Boehringer Ingelheim',
+        'content' => 'Chương trình đào tạo kết hợp team building thực sự khác biệt. Nhân viên rất hứng khởi, tinh thần làm việc nhóm được cải thiện rõ rệt.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo6.jpg'
+    ],
+    [
+        'name' => 'Ông Lý Đại Thắng',
+        'position' => 'Giám đốc Sản xuất',
+        'company' => 'BaoSteel Can Making',
+        'content' => 'Sự kiện kỷ niệm 20 năm thành lập công ty được tổ chức hoành tráng, đúng tầm vóc. Dịch vụ ăn uống, âm thanh ánh sáng đều xuất sắc.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo7.jpg'
+    ],
+    [
+        'name' => 'Bà Phạm Thanh Vân',
+        'position' => 'Trưởng phòng Marketing',
+        'company' => 'Tetra Pak',
+        'content' => 'Chương trình hội thảo khách hàng được tổ chức chuyên nghiệp, nội dung đầu tư kỹ lưỡng. Sự hỗ trợ từ khâu lên ý tưởng đến vận hành rất xuất sắc.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo8.jpg'
+    ],
+    [
+        'name' => 'Ông Vũ Đức Bình',
+        'position' => 'Giám đốc Truyền thông',
+        'company' => 'Sony Việt Nam',
+        'content' => 'Sự kiện ra mắt sản phẩm mới đã tạo ấn tượng mạnh với giới truyền thông và đối tác. Đây thực sự là một đối tác tổ chức sự kiện hàng đầu tại Việt Nam.',
+        'rating' => 5,
+        'avatar' => 'uploads/logo/logo9.jpg'
+    ]
+];
+$testimonials = $sponsorTestimonials;  // gán để dùng trong vòng lặp
+
 $latestArticles = getLatestArticles(4); 
 
 include 'includes/fe/header.php';
@@ -46,7 +122,7 @@ function fixImagePath($path) {
 html { scroll-behavior: smooth; }
 
 body {
-font-family: 'Times New Roman', sans-serif;
+    font-family: 'Times New Roman', sans-serif;
     background: linear-gradient(135deg, #1A1A1A 0%, #242424 50%, #1F1F1F 100%);
     color: var(--text-primary);
     line-height: 1.6;
@@ -55,7 +131,6 @@ font-family: 'Times New Roman', sans-serif;
 
 .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
 
-/* ==================== HEADER ==================== */
 .main-header {
     background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(36,36,36,0.95) 100%);
     padding: 12px 0;
@@ -203,13 +278,11 @@ font-family: 'Times New Roman', sans-serif;
     border-radius: 0 0 30px 30px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-
 .slider-wrapper {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 7;  
 }
-
 .slide {
     position: absolute;
     top: 0; left: 0;
@@ -266,31 +339,6 @@ font-family: 'Times New Roman', sans-serif;
     transform: scale(1.3);
 }
 
-/* ==================== HERO (tĩnh, không dùng ở đây nhưng giữ lại) ==================== */
-.hero {
-    height: 500px;
-    background: linear-gradient(135deg, rgba(26,26,26,0.7), rgba(36,36,36,0.7)), 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(212,161,71,0.1)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 60px;
-}
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: var(--primary-gold);
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
-}
-.hero p {
-    font-size: 1.3rem;
-    color: var(--text-secondary);
-    max-width: 700px;
-}
-
-/* ==================== SECTION HEADING ==================== */
 .section-heading {
     text-align: center;
     margin-bottom: 50px;
@@ -433,30 +481,25 @@ font-family: 'Times New Roman', sans-serif;
     gap: 32px;
     margin-bottom: 40px;
 }
-
 .home-page .grid-4 {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 32px;
     margin-bottom: 40px;
 }
-
 .home-page .event-card {
     background: linear-gradient(135deg, #1A1A1A, #242424);
     border: 1px solid rgba(212, 161, 71, 0.2);
     border-radius: 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
 .home-page .card-img {
     height: 190px;
     background: #2a2a2a;
     font-size: 3rem;
 }
-
 .home-page .card-content {
     padding: 18px 20px 20px;
 }
-
 .home-page .card-title {
     font-size: 1.15rem;
     line-height: 1.32;
@@ -467,14 +510,12 @@ font-family: 'Times New Roman', sans-serif;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-
 .home-page .card-date {
     color: var(--primary-gold);
     font-size: 0.85rem;
     margin-bottom: 10px;
     font-weight: 600;
 }
-
 .home-page .card-desc {
     color: var(--text-secondary);
     font-size: 0.9rem;
@@ -484,7 +525,6 @@ font-family: 'Times New Roman', sans-serif;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-
 .home-page .read-more,
 .home-page .btn-outline-light {
     display: inline-flex;
@@ -517,8 +557,7 @@ font-family: 'Times New Roman', sans-serif;
 }
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
+    height: 250px;  
     border-radius: 16px;
     overflow: hidden;
 }
@@ -673,7 +712,7 @@ font-family: 'Times New Roman', sans-serif;
 
 /* ==================== FOOTER ==================== */
 .footer {
-        background: linear-gradient(180deg, rgba(26, 26, 26, 0.98) 0%, rgba(36, 36, 36, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.98) 0%, rgba(36, 36, 36, 0.95) 100%);
     color: var(--text-secondary);
     padding: 60px 0 30px;
     margin-top: 80px;
@@ -765,13 +804,8 @@ font-family: 'Times New Roman', sans-serif;
         grid-template-columns: 1fr;
         gap: 28px;
     }
-    .home-page .event-card { border-radius: 24px; }
-    .home-page .card-img { height: 180px; }
+    .home-page .card-img { height: 220px; }
     .home-page .card-content { padding: 18px 20px 20px; }
-    .home-page .card-title { font-size: 1.1rem; }
-    .home-page .card-date { font-size: 0.82rem; margin-bottom: 10px; }
-    .home-page .card-desc { font-size: 0.88rem; }
-    .hero { height: 300px; }
 }
 @media (max-width: 576px) {
     .vmv-title { font-size: 2rem; }
@@ -902,9 +936,9 @@ font-family: 'Times New Roman', sans-serif;
             </div>
         </div>
 
-        <!-- TESTIMONIALS -->
+        <!-- SECTION ĐÁNH GIÁ TỪ KHÁCH HÀNG (ĐÃ CẬP NHẬT THEO YÊU CẦU) -->
         <div class="section-heading" style="margin-top: 80px;">
-            <h2>Đánh Giá Từ Khánh Hàng</h2>
+            <h2>Đánh Giá Từ Khách Hàng</h2>
             <p>Niềm tin từ các tập đoàn hàng đầu và đối tác chiến lược</p>
         </div>
         <div class="testimonials-grid">
@@ -913,9 +947,9 @@ font-family: 'Times New Roman', sans-serif;
                     <div class="testimonial-avatar">
                         <?php
                         $avatar = fixImagePath($t['avatar'] ?? '');
-                        if (!$avatar) $avatar = 'https://via.placeholder.com/80x80?text=Avatar';
+                        if (!$avatar) $avatar = 'https://via.placeholder.com/80x80?text=Logo';
                         ?>
-                        <img src="<?= htmlspecialchars($avatar) ?>" alt="<?= htmlspecialchars($t['name']) ?>">
+                        <img src="<?= htmlspecialchars($avatar) ?>" alt="<?= htmlspecialchars($t['company']) ?>">
                     </div>
                     <div class="testimonial-rating">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
@@ -935,26 +969,24 @@ font-family: 'Times New Roman', sans-serif;
             <?php endforeach; ?>
         </div>
 
-        <!-- LATEST ARTICLES -->
+        <!-- SECTION TIN TỨC & BÀI VIẾT -->
         <div class="section-heading" style="margin-top: 80px;">
             <h2>Tin Tức & Bài Viết</h2>
             <p>Cập nhật những xu hướng mới nhất trong tổ chức sự kiện</p>
         </div>
-        <div class="grid-3 news-grid">
+        <div class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
             <?php foreach ($latestArticles as $article): ?>
-                <a href="article_detail.php?id=<?= $article['id'] ?>" class="event-card news-card">
-                    <div class="card-img">
-                        <?php if (!empty($article['image']) && strpos($article['image'], 'data:image') !== false): ?>
-                            <div class="img-placeholder"><i class="fas fa-newspaper"></i></div>
-                        <?php else: ?>
-                            <img src="<?= htmlspecialchars(fixImagePath($article['image'])) ?>" alt="<?= htmlspecialchars($article['title']) ?>">
-                        <?php endif; ?>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title"><?= htmlspecialchars($article['title']) ?></h3>
-                        <div class="card-date"><i class="far fa-calendar-alt"></i> <?= date('d/m/Y', strtotime($article['created_at'])) ?></div>
-                        <p class="card-desc"><?= cleanText($article['description'] ?? '') ?></p>
-                        <span class="btn-outline-light">Đọc tiếp</span>
+                <a href="article_detail.php?id=<?= $article['id'] ?>" class="event-item" style="background: linear-gradient(135deg, #1A1A1A, #242424); border-radius: 24px; overflow: hidden; text-decoration: none; color: inherit; border: 1px solid rgba(212,161,71,0.2); transition: var(--transition);">
+                    <?php if (!empty($article['image']) && strpos($article['image'], 'data:image') === false): ?>
+                        <img src="<?= htmlspecialchars(fixImagePath($article['image'])) ?>" alt="<?= htmlspecialchars($article['title']) ?>" style="width:100%; height:200px; object-fit:cover;">
+                    <?php else: ?>
+                        <div style="height:200px; background:#2a2a2a; display:flex; align-items:center; justify-content:center; color:var(--primary-gold);">📰</div>
+                    <?php endif; ?>
+                    <div class="info" style="padding: 20px;">
+                        <h4 style="font-size:1.2rem; margin-bottom:8px;"><?= htmlspecialchars($article['title']) ?></h4>
+                        <div class="date" style="color:var(--primary-gold); margin-bottom:12px;"><i class="far fa-calendar-alt"></i> <?= date('d/m/Y', strtotime($article['created_at'])) ?></div>
+                        <p style="color:var(--text-secondary);"><?= cleanText(substr($article['description'] ?? '', 0, 100)) ?>...</p>
+                        <div class="read-more" style="margin-top:12px; color:var(--primary-gold);">Đọc tiếp <i class="fas fa-arrow-right"></i></div>
                     </div>
                 </a>
             <?php endforeach; ?>

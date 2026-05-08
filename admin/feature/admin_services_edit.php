@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-group">
                     <label>Mô tả chi tiết *</label>
-                   <textarea name="description" rows="6" required><?= htmlspecialchars(stripslashes($event['description'])) ?></textarea>
+                   <textarea name="description" rows="6" required><?= htmlspecialchars(stripslashes($service['description'])) ?></textarea>
                 </div>
                 <div class="form-group">
                     <label>Ngày thực hiện</label>

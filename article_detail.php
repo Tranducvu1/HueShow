@@ -390,16 +390,9 @@ font-family: 'Times New Roman', sans-serif;
                 <div class="single-content">
                     <?= cleanText($article['description']) ?>
                 </div>
-                <div class="blog-share">
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+        
             </div>
 
-            <!-- SIDEBAR -->
             <div class="sidebar">
                 <div class="widget">
                     <span class="widget-title">📌 Về chúng tôi</span>
@@ -412,7 +405,7 @@ font-family: 'Times New Roman', sans-serif;
                         $latestArticles = getLatestArticles(5);
                         foreach ($latestArticles as $post): 
                         ?>
-                            <li><a href="articles.php?id=<?= $post['id'] ?>"><i class="fas fa-angle-right"></i> <?= htmlspecialchars($post['title']) ?></a></li>
+                            <li><a href="article_detail.php?id=<?= $post['id'] ?>"><i class="fas fa-angle-right"></i> <?= htmlspecialchars($post['title']) ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
@@ -431,12 +424,11 @@ font-family: 'Times New Roman', sans-serif;
             </div>
         </div>
 
-        <!-- RELATED ARTICLES -->
         <?php if (!empty($relatedArticles)): ?>
         <div class="related-title">📖 Bài viết liên quan</div>
         <div class="related-grid">
             <?php foreach ($relatedArticles as $rel): ?>
-                <a href="articles.php?id=<?= $rel['id'] ?>" class="related-card">
+                <a href="article_detail.php?id=<?= $rel['id'] ?>" class="related-card">
                     <?php if (!empty($rel['image'])): ?>
                         <img src="<?= htmlspecialchars(fixImagePath($rel['image'])) ?>" alt="<?= htmlspecialchars($rel['title']) ?>">
                     <?php else: ?>
