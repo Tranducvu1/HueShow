@@ -1110,6 +1110,15 @@ main, section, .slider-container, .hero, .card, .grid-3, .grid-4 {
     text-decoration: none;
 }
 
+.social-icon i {
+    width: auto !important;
+    min-width: 0 !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
 .social-icon:hover {
     background: var(--gold);
     color: #1a1a1a;
@@ -1382,7 +1391,6 @@ main, section, .slider-container, .hero, .card, .grid-3, .grid-4 {
         color: #1a1a1a !important;
     }
 
-    /* ===== LỚP PHỦ ===== */
     body.menu-open::before {
         content: '' !important;
         position: fixed !important;
@@ -1395,7 +1403,6 @@ main, section, .slider-container, .hero, .card, .grid-3, .grid-4 {
         pointer-events: auto !important;
     }
 
-    /* ===== LAYOUT ===== */
     .hero h1 { font-size: 2rem; }
     .section-heading h2 { font-size: 1.6rem; }
     .grid-3, .grid-4, .testimonials-grid,

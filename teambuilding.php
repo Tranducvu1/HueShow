@@ -286,7 +286,6 @@ font-family: 'Times New Roman', sans-serif;
 .main-col { flex: 2; }
 .side-col { flex: 1; }
 
-/* ==================== FILTER FORM ==================== */
 .filter-form {
     display: grid;
     grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr) minmax(0, 0.8fr) auto;

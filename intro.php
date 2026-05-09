@@ -1034,43 +1034,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        const closeBtn = document.createElement('button');
-        closeBtn.setAttribute('aria-label', 'Đóng menu');
-        closeBtn.className = 'menu-close-btn';
-        closeBtn.style.cssText = [
-            'position:absolute', 'top:16px', 'right:16px',
-            'width:36px', 'height:36px',
-            'border-radius:50%', 'background:#f1f5f9',
-            'border:none', 'font-size:18px',
-            'color:#1a1a1a', 'cursor:pointer',
-            'display:flex',
-            'align-items:center',
-            'justify-content:center', 'font-weight:bold',
-            'z-index:2001', 'line-height:1'
-        ].join(';');
-        closeBtn.textContent = '✕';
-        closeBtn.addEventListener('click', closeMenu);
-        navList.appendChild(closeBtn);
     }
 
     const header = document.querySelector('.main-header');
     if (header) {
-        let lastScroll = 0, ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const cur = window.pageYOffset;
-                    header.style.transform = (cur > lastScroll && cur > 100)
-                        ? 'translateY(-100%)' : 'translateY(0)';
-                    lastScroll = cur;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-        header.addEventListener('mouseenter', () => {
-            header.style.transform = 'translateY(0)';
-        });
+        header.style.transform = 'none';
     }
 
     document.querySelectorAll('.horizontal-scroll-row').forEach(row => {
